@@ -7,13 +7,29 @@
   background-color: #282c34;
   text-align: center;
 }
-
-.items-container li {
-  font-size: 1.5rem;
-  font-weight: bold;
+.App > h2 {
   color: white;
 }
 
-.items-container li::first-letter {
+.items li {
+  font-size: 1.5rem;
+  font-weight: bold;
+  color: white;
+  list-style: none;
+}
+
+.items li::first-letter {
   text-transform: uppercase;
+}
+.input-container {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+.input-container > input {
+  border: none;
+  border-radius: 12px;
+  width: 100%;
+  outline: none;
+  padding: 10px;
 }

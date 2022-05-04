@@ -1,8 +1,14 @@
-import { useEffect, useReducer } from "react";
+import { useEffect, useReducer, useState } from "react";
 import "./App.css";
 import reducer from "./reducer";
+import Items from "./components/Items";
+import Button from "./components/Button";
 
-const DATA = ["item 1", "item 2", "item 3"];
+const DATA = [
+  { title: "item 1", completed: false },
+  { title: "item 2", completed: false },
+  { title: "item 3", completed: false },
+];
 
 const initialState = {
   items: [],
@@ -10,7 +16,7 @@ const initialState = {
 
 function App() {
   const [state, dispatch] = useReducer(reducer, initialState);
-
+  const [item, setItem] = useState("");
   useEffect(() => {
     dispatch({
       type: "set_items",
@@ -18,15 +24,34 @@ function App() {
         items: DATA,
       },
     });
-  });
+  }, []);
+
+  const add = () => {
+    dispatch({
+      type: "set_item",
+      payload: {
+        item: {
+          title: item,
+          completed: false,
+        },
+      },
+    });
+    setItem("");
+  };
 
   return (
     <div className="App">
-      <ul className="items-container">
-        {state.items.map((item) => (
-          <li>{item}</li>
-        ))}
-      </ul>
+      <h2>Todo App</h2>
+      <div className="input-container">
+        <input
+          type="text"
+          value={item}
+          onChange={(e) => setItem(e.target.value)}
+        />
+        <Button title="Add" onClick={add} text="Add" />
+      </div>
+
+      <Items state={state} dispatch={dispatch} />
     </div>
   );
 }
