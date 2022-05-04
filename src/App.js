@@ -17,6 +17,7 @@ const initialState = {
 function App() {
   const [state, dispatch] = useReducer(reducer, initialState);
   const [item, setItem] = useState("");
+
   useEffect(() => {
     dispatch({
       type: "set_items",
@@ -27,16 +28,19 @@ function App() {
   }, []);
 
   const add = () => {
-    dispatch({
-      type: "set_item",
-      payload: {
-        item: {
-          title: item,
-          completed: false,
+    if (!(state.items.filter((e) => e.title === item).length > 0)) {
+      dispatch({
+        type: "set_item",
+        payload: {
+          item: {
+            title: item,
+            completed: false,
+          },
         },
-      },
-    });
-    setItem("");
+      });
+      setItem("");
+    }
+    return;
   };
 
   return (
